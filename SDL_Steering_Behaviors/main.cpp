@@ -5,6 +5,7 @@
 #include "SDL_SimpleApp.h"
 #include "SceneSeek.h"
 #include "SceneFlee.h"
+#include "ScenePathFollowing.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ int main(int argc, char ** argv)
 
 	SDL_SimpleApp *app = SDL_SimpleApp::Instance();
 
-	Scene *curr_scene = new SceneSeek;
+	Scene *curr_scene = new ScenePathFollowing;
 	app->setWindowTitle(curr_scene->getTitle());
 
 	while (!quit)
@@ -37,6 +38,12 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneFlee;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_3)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFollowing;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))

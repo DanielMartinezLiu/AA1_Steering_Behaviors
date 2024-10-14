@@ -141,6 +141,7 @@
     <ClInclude Include="PathFollowing.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFlee.h" />
+    <ClInclude Include="ScenePathFollowing.h" />
     <ClInclude Include="SceneSeek.h" />
     <ClInclude Include="SDL_SimpleApp.h" />
     <ClInclude Include="Seek.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFollowing.cpp" />
     <ClCompile Include="SceneFlee.cpp" />
+    <ClCompile Include="ScenePathFollowing.cpp" />
     <ClCompile Include="SceneSeek.cpp" />
     <ClCompile Include="SDL_SimpleApp.cpp" />
     <ClCompile Include="Seek.cpp" />

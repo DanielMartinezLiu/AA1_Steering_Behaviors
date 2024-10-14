@@ -13,11 +13,12 @@ class Agent
 	friend class SteeringBehavior;
 
 private:
-	std::vector<SteeringBehavior*> steeringsBehaviorsStates;
 	SteeringBehavior* steering_behavior;
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D target;
+
+	int currentTargetIndex;
 
 	float mass;
 	float orientation;
@@ -34,16 +35,20 @@ private:
 
 public:
 	Agent();
+	Agent(SteeringBehavior* _steering_behavior);
+
 	~Agent();
 	SteeringBehavior *Behavior();
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	int getCurrentTargetIndex();
 	float getMaxForce();
 	float getMaxVelocity();
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
+	void setCurrentTargetIndex();
 	void setMass(float mass);
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	void update(float dtime, SDL_Event *event);

@@ -24,11 +24,4 @@ public:
 	{
 		return force;
 	}
-
-	/*
-	Vector2D Seek(Agent *agent, Vector2D target, float dtime);
-	Vector2D Seek(Agent *agent, Agent *target, float dtime);
-	Vector2D Flee(Agent *agent, Vector2D target, float dtime);
-	Vector2D Flee(Agent *agent, Agent *target, float dtime);
-	*/
 };

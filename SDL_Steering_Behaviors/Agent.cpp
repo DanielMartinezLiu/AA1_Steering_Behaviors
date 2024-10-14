@@ -1,8 +1,5 @@
 #include "Agent.h"
-#include "Seek.h"
-#include "Flee.h"
-#include "Flocking.h"
-#include "CompositeWeightedSum.h"
+#include "SteeringBehavior.h"
 
 using namespace std;
 
@@ -20,11 +17,24 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false)
 {
-	steeringsBehaviorsStates.push_back(new Seek());
-	steeringsBehaviorsStates.push_back(new Flee());
+	steering_behavior = nullptr;
+}
 
-	steering_behavior = steeringsBehaviorsStates[0];
-
+Agent::Agent(SteeringBehavior* _steering_behavior) : sprite_texture(0),
+				position(Vector2D(100, 100)),
+				target(Vector2D(1000, 100)),
+				velocity(Vector2D(0, 0)),
+				mass(0.5f),
+				max_force(50),
+				max_velocity(200),
+				orientation(0),
+				color({ 255,255,255,255 }),
+				sprite_num_frames(0),
+				sprite_w(0),
+				sprite_h(0),
+				draw_sprite(false)
+{
+	steering_behavior = _steering_behavior;
 }
 
 Agent::~Agent()
@@ -55,6 +65,11 @@ Vector2D Agent::getVelocity()
 	return velocity;
 }
 
+int Agent::getCurrentTargetIndex()
+{
+	return currentTargetIndex;
+}
+
 float Agent::getMaxForce()
 {
 	return max_force;
@@ -80,6 +95,11 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
+void Agent::setCurrentTargetIndex()
+{
+	currentTargetIndex++;
+}
+
 void Agent::setMass(float _mass)
 {
 	mass = _mass;
@@ -100,10 +120,6 @@ void Agent::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_sprite = !draw_sprite;
-		if (event->key.keysym.scancode == SDL_SCANCODE_Z)
-			steering_behavior = steeringsBehaviorsStates[0];
-		if (event->key.keysym.scancode == SDL_SCANCODE_X)
-			steering_behavior = steeringsBehaviorsStates[1];
 		break;
 	default:
 		break;
