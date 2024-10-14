@@ -137,6 +137,7 @@
     <ClInclude Include="CompositeWeightedSum.h" />
     <ClInclude Include="Flee.h" />
     <ClInclude Include="Flocking.h" />
+    <ClInclude Include="ImputManager.h" />
     <ClInclude Include="PathFollowing.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFlee.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="CompositeWeightedSum.cpp" />
     <ClCompile Include="Flee.cpp" />
     <ClCompile Include="Flocking.cpp" />
+    <ClCompile Include="ImputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFollowing.cpp" />
     <ClCompile Include="SceneFlee.cpp" />

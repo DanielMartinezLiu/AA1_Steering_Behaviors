@@ -59,6 +59,9 @@
     <ClInclude Include="CompositeWeightedSum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp">
@@ -95,6 +98,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CompositeWeightedSum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

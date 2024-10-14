@@ -1,23 +1,20 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include <minmax.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "SDL_SimpleApp.h"
 #include "utils.h"
-#include "Seek.h"
-#include "Flee.h"
-#include "Flocking.h"
-#include "PathFollowing.h"
-#include "CompositeWeightedSum.h"
 
 class Agent
 {
 	friend class SteeringBehavior;
 
 private:
-	SteeringBehavior *steering_behavior;
+	std::vector<SteeringBehavior*> steeringsBehaviorsStates;
+	SteeringBehavior* steering_behavior;
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D target;
@@ -42,6 +39,7 @@ public:
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	float getMaxForce();
 	float getMaxVelocity();
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);

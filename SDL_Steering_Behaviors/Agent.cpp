@@ -1,4 +1,8 @@
 #include "Agent.h"
+#include "Seek.h"
+#include "Flee.h"
+#include "Flocking.h"
+#include "CompositeWeightedSum.h"
 
 using namespace std;
 
@@ -16,7 +20,11 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false)
 {
-	steering_behavior = nullptr;
+	steeringsBehaviorsStates.push_back(new Seek());
+	steeringsBehaviorsStates.push_back(new Flee());
+
+	steering_behavior = steeringsBehaviorsStates[0];
+
 }
 
 Agent::~Agent()
@@ -45,6 +53,11 @@ Vector2D Agent::getTarget()
 Vector2D Agent::getVelocity()
 {
 	return velocity;
+}
+
+float Agent::getMaxForce()
+{
+	return max_force;
 }
 
 float Agent::getMaxVelocity()
@@ -79,8 +92,7 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
-	steering_behavior = new Seek;
-
+	steering_behavior->SetTarget(this->getTarget());
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -88,6 +100,10 @@ void Agent::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_sprite = !draw_sprite;
+		if (event->key.keysym.scancode == SDL_SCANCODE_Z)
+			steering_behavior = steeringsBehaviorsStates[0];
+		if (event->key.keysym.scancode == SDL_SCANCODE_X)
+			steering_behavior = steeringsBehaviorsStates[1];
 		break;
 	default:
 		break;
@@ -96,10 +112,10 @@ void Agent::update(float dtime, SDL_Event *event)
 	Behavior()->ApplySteeringForce(this, dtime);
 
 	Vector2D acceleration = steering_behavior->GetForce() / mass;
-	velocity = velocity + acceleration * dtime;
-	velocity = velocity.Truncate(max_velocity);
+	velocity += acceleration * dtime;
+	velocity.Truncate(max_velocity);
 
-	position = position + velocity * dtime;
+	position += velocity * dtime;
 
 
 	// Update orientation

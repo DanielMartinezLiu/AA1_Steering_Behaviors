@@ -4,11 +4,10 @@
 
 class Flee : public SteeringBehavior
 {
-private:
-	Vector2D targetPosition;
-
 public:
 	Flee() = default;
+	Flee(Vector2D target);
+
 	~Flee();
 
 	void ApplySteeringForce(Agent* agent, float dTime) override;

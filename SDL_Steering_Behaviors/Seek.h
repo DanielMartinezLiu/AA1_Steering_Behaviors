@@ -4,11 +4,10 @@
 
 class Seek : public SteeringBehavior
 {
-private:
-	Vector2D targetPosition;
-
 public:
 	Seek() = default;
+	Seek(Vector2D target);
+
 	~Seek();
 
 	void ApplySteeringForce(Agent* agent, float dTime) override;
