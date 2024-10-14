@@ -1,9 +1,16 @@
 #pragma once
 #include <iostream>
 #include <SDL.h>
+#include "Agent.h"
+#include <vector>
 
 class Scene
 {
+private:
+	
+	std::vector<Agent*> agents;
+
+
 public:
 	Scene() {};
 	virtual ~Scene() {};
