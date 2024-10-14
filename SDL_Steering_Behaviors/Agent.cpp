@@ -16,7 +16,7 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false)
 {
-	steering_behavior = new SteeringBehavior;
+	steering_behavior = nullptr;
 }
 
 Agent::~Agent()
@@ -79,6 +79,7 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
+	steering_behavior = new Seek;
 
 	//cout << "agent update:" << endl;
 
@@ -92,9 +93,9 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	Vector2D steering_force = this->Behavior()->Seek(this, this->getTarget(), dtime);
+	Behavior()->ApplySteeringForce(this, dtime);
 
-	Vector2D acceleration = steering_force / mass;
+	Vector2D acceleration = steering_behavior->GetForce() / mass;
 	velocity = velocity + acceleration * dtime;
 	velocity = velocity.Truncate(max_velocity);
 

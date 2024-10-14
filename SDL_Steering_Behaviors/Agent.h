@@ -3,11 +3,14 @@
 #include <minmax.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "SDL_SimpleApp.h"
-#include "Vector2D.h"
-#include "utils.h"
-#include "SteeringBehavior.h"
 
+#include "SDL_SimpleApp.h"
+#include "utils.h"
+#include "Seek.h"
+#include "Flee.h"
+#include "Flocking.h"
+#include "PathFollowing.h"
+#include "CompositeWeightedSum.h"
 
 class Agent
 {

@@ -11,4 +11,3 @@ public:
 	virtual void draw() = 0;
 	virtual const char* getTitle() { return ""; };
 };
-

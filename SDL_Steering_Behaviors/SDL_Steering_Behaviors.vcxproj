@@ -134,20 +134,30 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="CompositeWeightedSum.h" />
+    <ClInclude Include="Flee.h" />
+    <ClInclude Include="Flocking.h" />
+    <ClInclude Include="PathFollowing.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFlee.h" />
     <ClInclude Include="SceneSeek.h" />
     <ClInclude Include="SDL_SimpleApp.h" />
+    <ClInclude Include="Seek.h" />
     <ClInclude Include="SteeringBehavior.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="CompositeWeightedSum.cpp" />
+    <ClCompile Include="Flee.cpp" />
+    <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PathFollowing.cpp" />
     <ClCompile Include="SceneFlee.cpp" />
     <ClCompile Include="SceneSeek.cpp" />
     <ClCompile Include="SDL_SimpleApp.cpp" />
+    <ClCompile Include="Seek.cpp" />
     <ClCompile Include="SteeringBehavior.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
