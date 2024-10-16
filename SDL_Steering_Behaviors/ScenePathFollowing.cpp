@@ -1,12 +1,13 @@
 #include "ScenePathFollowing.h"
-#include "PathFollowing.h"
+#include "CompositeWeightedSum.h"
 
 ScenePathFollowing::ScenePathFollowing()
 {
-	Agent* agent = new Agent(new PathFollowing());
+	Agent* agent = new Agent(new CompositeWeightedSum());
+	agent->GetSteeringBehavior();
 	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(640, 360));
-	//agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 }
 
@@ -40,12 +41,12 @@ void ScenePathFollowing::update(float dtime, SDL_Event* event)
 
 	if (targets.size() > 0)
 	{
-		if (CalculateDistance(agents[0]) < 100 && agents[0]->getCurrentTargetIndex() < targets.size())
+		if (CalculateDistance(agents[0]) < 100 && agents[0]->getCurrentTargetIndex() + 1 < targets.size())
 		{
-			agents[0]->setCurrentTargetIndex();
+
+			agents[0]->addCurrentTargetIndex();
 			agents[0]->setTarget(targets[agents[0]->getCurrentTargetIndex()]);
 		}
-
 	}
 	
 	agents[0]->update(dtime, event);

@@ -1,15 +1,19 @@
 
 #include "SceneSeek.h"
+#include "CompositeWeightedSum.h"
 #include "Seek.h"
 
 using namespace std;
 
 SceneSeek::SceneSeek()
 {
-	Agent *agent = new Agent(new Seek());
+	CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
+	compositedWeightSum->AddSteeringBehavior(new Seek(), 1);
+	Agent* agent = new Agent(compositedWeightSum);
+
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
-	//agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 	target = Vector2D(640, 360);
 }

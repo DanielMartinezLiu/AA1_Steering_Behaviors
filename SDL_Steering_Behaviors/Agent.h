@@ -38,7 +38,7 @@ public:
 	Agent(SteeringBehavior* _steering_behavior);
 
 	~Agent();
-	SteeringBehavior *Behavior();
+	SteeringBehavior *GetSteeringBehavior();
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
@@ -48,7 +48,7 @@ public:
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
-	void setCurrentTargetIndex();
+	void addCurrentTargetIndex();
 	void setMass(float mass);
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	void update(float dtime, SDL_Event *event);

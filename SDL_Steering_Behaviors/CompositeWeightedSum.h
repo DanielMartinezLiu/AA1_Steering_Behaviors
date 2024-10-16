@@ -16,5 +16,6 @@ public:
 
 	void ApplySteeringForce(Agent* agent, float dTime) override;
 
+	void AddSteeringBehavior(SteeringBehavior* steeringBehavior, float weight);
 };
 

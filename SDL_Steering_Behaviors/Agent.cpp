@@ -45,7 +45,7 @@ Agent::~Agent()
 		delete (steering_behavior);
 }
 
-SteeringBehavior * Agent::Behavior()
+SteeringBehavior * Agent::GetSteeringBehavior()
 {
 	return steering_behavior;
 }
@@ -95,7 +95,7 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
-void Agent::setCurrentTargetIndex()
+void Agent::addCurrentTargetIndex()
 {
 	currentTargetIndex++;
 }
@@ -125,7 +125,7 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	Behavior()->ApplySteeringForce(this, dtime);
+	GetSteeringBehavior()->ApplySteeringForce(this, dtime);
 
 	Vector2D acceleration = steering_behavior->GetForce() / mass;
 	velocity += acceleration * dtime;
