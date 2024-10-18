@@ -4,9 +4,8 @@ CompositeWeightedSum::~CompositeWeightedSum()
 {
 	for (int i = 0; i < steerings.size(); i++)
 	{
-		delete steerings[i];
+		delete steerings[i].first;
 	}
-
 }
 
 void CompositeWeightedSum::ApplySteeringForce(Agent* agent, float dTime)
@@ -17,8 +16,6 @@ void CompositeWeightedSum::ApplySteeringForce(Agent* agent, float dTime)
 		pair.first->ApplySteeringForce(agent, dTime);
 		force += pair.first->GetForce() * pair.second;
 	}
-
-	
 }
 
 void CompositeWeightedSum::AddSteeringBehavior(SteeringBehavior* steeringBehavior, float weight)

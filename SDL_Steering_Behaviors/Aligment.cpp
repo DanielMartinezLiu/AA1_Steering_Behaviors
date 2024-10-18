@@ -3,6 +3,9 @@
 
 void Aligment::ApplySteeringForce(Agent* _agent, float _dTime)
 {
+	int neighborCount = 0;
+	Vector2D aligmentvelocity;
+
 	for (Agent* agent : AM.Instance().GetAgents())
 	{
 		if (agent != _agent)

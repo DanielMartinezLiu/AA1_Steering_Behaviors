@@ -12,7 +12,7 @@ private:
 	std::vector<Agent*> agents;
 
 	AgentManager() = default;
-
+	~AgentManager();
 	AgentManager(const AgentManager&) = delete;
 	AgentManager& operator =(const AgentManager&) = delete;
 

@@ -11,34 +11,19 @@
 using namespace std;
 
 CompositeWeightSumScene::CompositeWeightSumScene()
-{
-	CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
-	compositedWeightSum->AddSteeringBehavior(new Seek(), 1.f);
-	compositedWeightSum->AddSteeringBehavior(new Cohesion(), 0.5f);
-	compositedWeightSum->AddSteeringBehavior(new Separation(), 0.8f);
-	compositedWeightSum->AddSteeringBehavior(new Aligment(), 0.2f);
-	Agent* agent = new Agent(compositedWeightSum, 50);
-	Agent* agent2 = new Agent(compositedWeightSum, 50);
-
-	agent->setPosition(Vector2D(640, 360));
-	agent->setTarget(Vector2D(640, 360));
-	agent->loadSpriteTexture("../res/soldier.png", 4);
-	agents.push_back(agent);
-	agent2->setPosition(Vector2D(140, 360));
-	agent2->setTarget(Vector2D(640, 360));
-	agent2->loadSpriteTexture("../res/soldier.png", 4);
-	agents.push_back(agent2);
+{ 
 	target = Vector2D(640, 360);
+	Vector2D position = Vector2D(640, 360);
+
+	CreateAgents(10, position, target);
+
 
 	AM.Instance().SetAgents(GetAgents());
 }
 
 CompositeWeightSumScene::~CompositeWeightSumScene()
 {
-	for (int i = 0; i < (int)agents.size(); i++)
-	{
-		delete agents[i];
-	}
+
 }
 
 void CompositeWeightSumScene::update(float dtime, SDL_Event* event)
@@ -50,6 +35,7 @@ void CompositeWeightSumScene::update(float dtime, SDL_Event* event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
+
 			for (int i = 0; i < (int)agents.size(); i++)
 				agents[i]->setTarget(target);
 		}
@@ -57,6 +43,7 @@ void CompositeWeightSumScene::update(float dtime, SDL_Event* event)
 	default:
 		break;
 	}
+
 	for (int i = 0; i < (int)agents.size(); i++)
 		agents[i]->update(dtime, event);
 }
@@ -64,6 +51,7 @@ void CompositeWeightSumScene::update(float dtime, SDL_Event* event)
 void CompositeWeightSumScene::draw()
 {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
+
 	for (int i = 0; i < (int)agents.size(); i++)
 		agents[i]->draw();
 }
@@ -71,4 +59,29 @@ void CompositeWeightSumScene::draw()
 const char* CompositeWeightSumScene::getTitle()
 {
 	return "SDL Steering Behaviors :: CompositeWheightSum Demo";
+}
+
+void CompositeWeightSumScene::CreateAgents(int quantity, Vector2D position, Vector2D target)
+{
+	int x = 0;
+	int y = 0;
+	for (int i = 0; i < quantity; i++)
+	{
+		CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
+		compositedWeightSum->AddSteeringBehavior(new Seek(), 1.0f);
+		compositedWeightSum->AddSteeringBehavior(new Cohesion(), 0.2f);
+		compositedWeightSum->AddSteeringBehavior(new Separation(), 0.7f);
+		compositedWeightSum->AddSteeringBehavior(new Aligment(), 0.3f);
+
+		Agent* agent = new Agent(compositedWeightSum, 50);
+
+		Vector2D newPosition = Vector2D(position.x + x, position.y + y);
+
+		agent->setPosition(newPosition);
+		agent->setTarget(target);
+		agent->loadSpriteTexture("../res/soldier.png", 4);
+		agents.push_back(agent);
+		x += 25;
+		y += 25;
+	}
 }

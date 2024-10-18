@@ -3,13 +3,16 @@
 
 void Separation::ApplySteeringForce(Agent* _agent, float _dTime)
 {
+	int neighborCount = 0;
+	Vector2D separationVector;
+
 	for (Agent* agent : AM.Instance().GetAgents())
 	{
 		if (agent != _agent)
 		{
 			if (Vector2D::Distance(agent->getPosition(), _agent->getPosition()) < _agent->getNeighborRadius())
 			{
-				separationVector += _agent->getPosition() - _agent->getPosition();
+				separationVector += _agent->getPosition() - agent->getPosition();
 				++neighborCount;
 			}
 		}

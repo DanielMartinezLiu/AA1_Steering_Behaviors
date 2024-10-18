@@ -3,6 +3,9 @@
 
 void Cohesion::ApplySteeringForce(Agent* _agent, float _dTime)
 {
+	int neighborCount = 0;
+	Vector2D averagePosition;
+
 	for (Agent* agent : AM.Instance().GetAgents())
 	{
 		if (agent != _agent)
