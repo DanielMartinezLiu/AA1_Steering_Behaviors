@@ -138,6 +138,7 @@
     <ClInclude Include="Aligment.h" />
     <ClInclude Include="Cohesion.h" />
     <ClInclude Include="CompositeWeightedSum.h" />
+    <ClInclude Include="CompositeWeightSumScene.h" />
     <ClInclude Include="Flee.h" />
     <ClInclude Include="Flocking.h" />
     <ClInclude Include="ImputManager.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Aligment.cpp" />
     <ClCompile Include="Cohesion.cpp" />
     <ClCompile Include="CompositeWeightedSum.cpp" />
+    <ClCompile Include="CompositeWeightSumScene.cpp" />
     <ClCompile Include="Flee.cpp" />
     <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="ImputManager.cpp" />

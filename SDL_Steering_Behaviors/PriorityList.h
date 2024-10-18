@@ -7,6 +7,7 @@ class PriorityList : public SteeringBehavior
 {
 private:
 	Vector2D targetPosition;
+	float K_PRIORITY_THRESHOLD;
 
 	std::vector<std::pair<SteeringBehavior*, float>> steerings;
 

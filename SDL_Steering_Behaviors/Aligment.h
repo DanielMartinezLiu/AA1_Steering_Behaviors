@@ -1,4 +1,4 @@
-##pragma once
+#pragma once
 #include "SteeringBehavior.h"
 
 class Aligment : public SteeringBehavior
@@ -6,7 +6,6 @@ class Aligment : public SteeringBehavior
 private:
 
 	int neighborCount;
-	float neighborRadius;
 	Vector2D aligmentvelocity;
 
 public:

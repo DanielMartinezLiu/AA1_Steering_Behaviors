@@ -1,17 +1,25 @@
-#include "SceneFlee.h"
+#include "CompositeWeightSumScene.h"
 #include "CompositeWeightedSum.h"
-#include "Flee.h"
+#include "Seek.h"
+#include "Separation.h"
+#include "Aligment.h"
+#include "Cohesion.h"
+
 #include "SDL_SimpleApp.h"
 #include "AgentManager.h"
 
 using namespace std;
 
-SceneFlee::SceneFlee()
+CompositeWeightSumScene::CompositeWeightSumScene()
 {
 	CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
-	compositedWeightSum->AddSteeringBehavior(new Flee(), 1);
-	Agent *agent = new Agent(compositedWeightSum, 1);
-	agent->setPosition(Vector2D(640,360));
+	compositedWeightSum->AddSteeringBehavior(new Seek(), 0.5f);
+	compositedWeightSum->AddSteeringBehavior(new Cohesion(), 0.5f);
+	compositedWeightSum->AddSteeringBehavior(new Separation(), 0.5f);
+	compositedWeightSum->AddSteeringBehavior(new Aligment(), 0.5f);
+	Agent* agent = new Agent(compositedWeightSum, 1);
+
+	agent->setPosition(Vector2D(640, 360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
@@ -20,7 +28,7 @@ SceneFlee::SceneFlee()
 	AM.Instance().SetAgents(GetAgents());
 }
 
-SceneFlee::~SceneFlee()
+CompositeWeightSumScene::~CompositeWeightSumScene()
 {
 	for (int i = 0; i < (int)agents.size(); i++)
 	{
@@ -28,7 +36,7 @@ SceneFlee::~SceneFlee()
 	}
 }
 
-void SceneFlee::update(float dtime, SDL_Event *event)
+void CompositeWeightSumScene::update(float dtime, SDL_Event* event)
 {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
@@ -43,17 +51,17 @@ void SceneFlee::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-	
+
 	agents[0]->update(dtime, event);
 }
 
-void SceneFlee::draw()
+void CompositeWeightSumScene::draw()
 {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	agents[0]->draw();
 }
 
-const char* SceneFlee::getTitle()
+const char* CompositeWeightSumScene::getTitle()
 {
-	return "SDL Steering Behaviors :: Flee Demo";
+	return "SDL Steering Behaviors :: CompositeWheightSum Demo";
 }

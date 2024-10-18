@@ -5,7 +5,7 @@ void Cohesion::ApplySteeringForce(Agent* _agent, float _dTime)
 {
 	for (Agent* agent : AM.Instance().GetAgents())
 	{
-		if (Vector2D::Distance(agent->getPosition(), _agent->getPosition()) < neighborRadius)
+		if (Vector2D::Distance(agent->getPosition(), _agent->getPosition()) < _agent->getNeighborRadius())
 		{
 			averagePosition += agent->getPosition();
 			++neighborCount;

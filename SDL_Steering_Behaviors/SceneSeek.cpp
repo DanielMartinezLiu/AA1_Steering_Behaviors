@@ -1,4 +1,3 @@
-
 #include "SceneSeek.h"
 #include "CompositeWeightedSum.h"
 #include "Seek.h"
@@ -12,7 +11,7 @@ SceneSeek::SceneSeek()
 {
 	CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
 	compositedWeightSum->AddSteeringBehavior(new Seek(), 1);
-	Agent* agent = new Agent(compositedWeightSum);
+	Agent* agent = new Agent(compositedWeightSum, 1);
 
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));

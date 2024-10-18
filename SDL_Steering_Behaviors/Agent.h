@@ -24,6 +24,7 @@ private:
 	float orientation;
 	float max_force;
 	float max_velocity;
+	float neighborRadius;
 
 	SDL_Color color;
 
@@ -35,7 +36,7 @@ private:
 
 public:
 	Agent();
-	Agent(SteeringBehavior* _steering_behavior);
+	Agent(SteeringBehavior* _steering_behavior, float _neighborRadius);
 
 	~Agent();
 	SteeringBehavior *GetSteeringBehavior();
@@ -45,6 +46,7 @@ public:
 	int getCurrentTargetIndex();
 	float getMaxForce();
 	float getMaxVelocity();
+	float getNeighborRadius();
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);

@@ -22,7 +22,7 @@ Agent::Agent() : sprite_texture(0),
 	steering_behavior = nullptr;
 }
 
-Agent::Agent(SteeringBehavior* _steering_behavior) : sprite_texture(0),
+Agent::Agent(SteeringBehavior* _steering_behavior, float _neighborRadius) : sprite_texture(0),
 				position(Vector2D(100, 100)),
 				target(Vector2D(1000, 100)),
 				velocity(Vector2D(0, 0)),
@@ -37,6 +37,7 @@ Agent::Agent(SteeringBehavior* _steering_behavior) : sprite_texture(0),
 				draw_sprite(false)
 {
 	steering_behavior = _steering_behavior;
+	neighborRadius = _neighborRadius;
 }
 
 Agent::~Agent()
@@ -80,6 +81,11 @@ float Agent::getMaxForce()
 float Agent::getMaxVelocity()
 {
 	return max_velocity;
+}
+
+float Agent::getNeighborRadius()
+{
+	return neighborRadius;
 }
 
 void Agent::setPosition(Vector2D _position)
