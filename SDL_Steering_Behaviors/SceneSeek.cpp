@@ -2,6 +2,9 @@
 #include "SceneSeek.h"
 #include "CompositeWeightedSum.h"
 #include "Seek.h"
+#include "SDL_SimpleApp.h"
+#include "AgentManager.h"
+
 
 using namespace std;
 
@@ -16,6 +19,8 @@ SceneSeek::SceneSeek()
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 	target = Vector2D(640, 360);
+
+	AM.Instance().SetAgents(GetAgents());
 }
 
 SceneSeek::~SceneSeek()

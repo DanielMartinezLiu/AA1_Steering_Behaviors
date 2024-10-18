@@ -1,5 +1,7 @@
 #include "Agent.h"
 #include "SteeringBehavior.h"
+#include "SDL_SimpleApp.h"
+
 
 using namespace std;
 

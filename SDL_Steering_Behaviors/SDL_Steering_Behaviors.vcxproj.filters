@@ -50,9 +50,6 @@
     <ClInclude Include="Flee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PathFollowing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Flocking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -62,7 +59,19 @@
     <ClInclude Include="ImputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScenePathFollowing.h">
+    <ClInclude Include="Separation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cohesion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Aligment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -94,9 +103,6 @@
     <ClCompile Include="Flee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PathFollowing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Flocking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -106,7 +112,19 @@
     <ClCompile Include="ImputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScenePathFollowing.cpp">
+    <ClCompile Include="Separation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cohesion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Aligment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PriorityList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

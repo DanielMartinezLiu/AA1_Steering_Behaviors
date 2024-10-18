@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Scene.h"
-#include "Agent.h"
 
 class SceneFlee : public Scene
 {
@@ -12,7 +11,5 @@ public:
 	void draw();
 	const char* getTitle();
 private:
-	std::vector<Agent*> agents;
-	Vector2D target;
 };
 
