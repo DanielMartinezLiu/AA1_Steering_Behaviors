@@ -2,6 +2,11 @@
 
 CompositeWeightedSum::~CompositeWeightedSum()
 {
+	for (int i = 0; i < steerings.size(); i++)
+	{
+		delete steerings[i];
+	}
+
 }
 
 void CompositeWeightedSum::ApplySteeringForce(Agent* agent, float dTime)

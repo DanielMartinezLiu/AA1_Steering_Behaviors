@@ -27,7 +27,7 @@ Agent::Agent(SteeringBehavior* _steering_behavior, float _neighborRadius) : spri
 				target(Vector2D(1000, 100)),
 				velocity(Vector2D(0, 0)),
 				mass(0.5f),
-				max_force(50),
+				max_force(1),
 				max_velocity(200),
 				orientation(0),
 				color({ 255,255,255,255 }),

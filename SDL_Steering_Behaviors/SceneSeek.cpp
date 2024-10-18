@@ -39,20 +39,23 @@ void SceneSeek::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			target = Vector2D((float)(event->button.x), (float)(event->button.y));
-			agents[0]->setTarget(target);
+			for (int i = 0; i < (int)agents.size(); i++)
+				agents[i]->setTarget(target);
 		}
 		break;
 	default:
 		break;
 	}
 	
-	agents[0]->update(dtime, event);
+	for (int i = 0; i < (int)agents.size(); i++)
+		agents[i]->update(dtime, event);
 }
 
 void SceneSeek::draw()
 {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
-	agents[0]->draw();
+	for (int i = 0; i < (int)agents.size(); i++)
+		agents[i]->draw();
 }
 
 const char* SceneSeek::getTitle()

@@ -5,11 +5,21 @@ void Aligment::ApplySteeringForce(Agent* _agent, float _dTime)
 {
 	for (Agent* agent : AM.Instance().GetAgents())
 	{
-		if (Vector2D::Distance(agent->getPosition(), _agent->getPosition()) < _agent->getNeighborRadius())
+		if (agent != _agent)
 		{
-			aligmentvelocity += agent->getVelocity();
-			++neighborCount;
+			if (Vector2D::Distance(agent->getPosition(), _agent->getPosition()) < _agent->getNeighborRadius())
+			{
+				aligmentvelocity += agent->getVelocity();
+				++neighborCount;
+			}
 		}
+
+	}
+
+	if (neighborCount == 0)
+	{
+		force = 0;
+		return;
 	}
 
 	aligmentvelocity /= neighborCount;
