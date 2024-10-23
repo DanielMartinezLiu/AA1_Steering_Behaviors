@@ -142,6 +142,8 @@
     <ClInclude Include="Flee.h" />
     <ClInclude Include="Flocking.h" />
     <ClInclude Include="ImputManager.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="ObstacleManager.h" />
     <ClInclude Include="PriorityList.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFlee.h" />
@@ -164,6 +166,8 @@
     <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="ImputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="ObstacleManager.cpp" />
     <ClCompile Include="PriorityList.cpp" />
     <ClCompile Include="SceneFlee.cpp" />
     <ClCompile Include="SceneSeek.cpp" />
