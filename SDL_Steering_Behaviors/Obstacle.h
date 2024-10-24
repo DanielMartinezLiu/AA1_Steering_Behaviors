@@ -1,10 +1,4 @@
 #pragma once
-class Obstacle
-{
-
-};
-
-#pragma once
 #include <iostream>
 #include <vector>
 #include <minmax.h>
@@ -18,25 +12,17 @@ class Obstacle
 {
 private:
 	Vector2D position;
+	float radius;
 
 	SDL_Color color;
 
-	SDL_Texture* sprite_texture;
-	bool draw_sprite;
-	int sprite_num_frames;
-	int sprite_w;
-	int sprite_h;
-
 public:
-	Obstacle();
+	Obstacle(Vector2D _position);
 
 	~Obstacle();
-	Vector2D getPosition();
-	void setPosition(Vector2D position);
-	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
-	void update(float dtime, SDL_Event* event);
 	void draw();
-	bool loadSpriteTexture(char* filename, int num_frames = 1);
+	Vector2D GetPosition() { return position; }
+	float GetRadius() { return radius; }
 };
 
 

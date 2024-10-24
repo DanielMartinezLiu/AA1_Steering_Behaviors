@@ -7,6 +7,8 @@
 
 #include "utils.h"
 #include "Vector2D.h"
+#include "ObstacleManager.h"
+#include "Obstacle.h"
 
 class Agent
 {
@@ -25,6 +27,7 @@ private:
 	float max_force;
 	float max_velocity;
 	float neighborRadius;
+	float avoidanceLookahead;
 
 	SDL_Color color;
 
@@ -54,6 +57,8 @@ public:
 	void setMass(float mass);
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	void update(float dtime, SDL_Event *event);
+	void collisionEnter();
+	bool obstacleIntersection(Obstacle* _obstacle, Vector2D &_raycast, Vector2D &_intersectionPoint, Vector2D &_normalVecotr);
 	void draw();
 	bool loadSpriteTexture(char* filename, int num_frames=1);
 };

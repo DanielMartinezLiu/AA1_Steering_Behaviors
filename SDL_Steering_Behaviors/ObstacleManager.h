@@ -25,7 +25,7 @@ public:
 	}
 
 	inline std::vector<Obstacle*> GetObstacles() { return obstacles; }
-	inline void SetObstacles(std::vector<Obstacle*> _obstacles) { obstacles = _obstacles; }
+	inline void AddObstacles(Obstacle* _obstacles) { obstacles.push_back(_obstacles); }
 };
 
 
