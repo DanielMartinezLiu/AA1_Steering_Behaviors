@@ -18,7 +18,7 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_w(0),
 	             sprite_h(0),
 	             draw_sprite(false),
-				avoidanceLookahead(1)
+				avoidanceLookahead(120)
 {
 	steering_behavior = nullptr;
 }
@@ -36,7 +36,7 @@ Agent::Agent(SteeringBehavior* _steering_behavior, float _neighborRadius) : spri
 				sprite_w(0),
 				sprite_h(0),
 				draw_sprite(false),
-				avoidanceLookahead(1)
+				avoidanceLookahead(120)
 {
 	steering_behavior = _steering_behavior;
 	neighborRadius = _neighborRadius;
@@ -138,8 +138,6 @@ void Agent::update(float dtime, SDL_Event *event)
 	collisionEnter();
 	GetSteeringBehavior()->ApplySteeringForce(this, dtime);
 
-
-
 	Vector2D acceleration = steering_behavior->GetForce() / mass;
 	velocity += acceleration * dtime;
 	velocity.Truncate(max_velocity);
@@ -149,7 +147,6 @@ void Agent::update(float dtime, SDL_Event *event)
 
 	// Update orientation
 	orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
-
 
 	// Trim position values to window size
 	if (position.x < 0) position.x = TheApp::Instance()->getWinSize().x;
@@ -162,7 +159,9 @@ void Agent::collisionEnter()
 {
 	Vector2D raycatVector = position;
 	Vector2D _velocity = velocity;
-	raycatVector += _velocity.Normalize() * avoidanceLookahead;
+
+	_velocity = _velocity.Normalize() * avoidanceLookahead;
+	raycatVector += _velocity;
 
 	Vector2D intersectionPoint, normalVector;
 	bool obstacleAvoidanceCollision = false;
@@ -177,10 +176,12 @@ void Agent::collisionEnter()
 
 	if (obstacleAvoidanceCollision)
 	{
-		std::cout << "Colisiona" << std::endl;
-		Vector2D avoidTarget = intersectionPoint;
-		avoidTarget += normalVector;
-		steering_behavior->SetTarget(avoidTarget);
+		float avoidanceDistance = 70.f;
+		Vector2D avoidanceForce = normalVector * avoidanceDistance;
+
+		float smoothingFactor = 0.1f;
+		velocity = Vector2D::Lerp(velocity, velocity + avoidanceForce, smoothingFactor);
+		velocity.Truncate(max_velocity);
 	}
 }
 
@@ -191,7 +192,12 @@ bool Agent::obstacleIntersection(Obstacle* _obstacle, Vector2D& _raycast, Vector
 	segmentDir.Normalize();
 
 	Vector2D toCircle = _obstacle->GetPosition() - position;
-	float projectionLength = toCircle.Dot(segmentDir, segmentDir);
+	float projectionLength = Vector2D::Dot(toCircle, segmentDir);
+
+	if (projectionLength < 0 || projectionLength > segmentLength)
+	{
+		return false;
+	}
 
 	Vector2D closestPointOnSegment = position + segmentDir * projectionLength;
 
