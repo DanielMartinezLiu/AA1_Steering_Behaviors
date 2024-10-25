@@ -9,15 +9,17 @@ private:
 	Vector2D targetPosition;
 	float K_PRIORITY_THRESHOLD;
 
-	std::vector<std::pair<SteeringBehavior*, float>> steerings;
+	std::vector<SteeringBehavior*> steerings;
 
 public:
 	PriorityList() = default;
+	PriorityList(float _threshold)
+		: K_PRIORITY_THRESHOLD(_threshold) {};
 	~PriorityList();
 
 	void ApplySteeringForce(Agent* agent, float dTime) override;
 
-	void AddSteeringBehavior(SteeringBehavior* steeringBehavior, float weight);
+	void PriorityList::AddSteeringBehavior(SteeringBehavior* _steeringBehavior);
 };
 
 
