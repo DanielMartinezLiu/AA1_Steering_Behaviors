@@ -146,12 +146,6 @@ struct Vector2D
 		Vector2D v = start - end;
 		return v.LengthSquared();
 	}
-
-	static Vector2D Lerp(Vector2D& start, Vector2D& end, float t)
-	{
-		return start + (end - start) * t;
-	}
-
 };
 
 namespace Vector2DUtils

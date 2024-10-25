@@ -5,21 +5,22 @@ PriorityList::~PriorityList()
 }
 
 void PriorityList::ApplySteeringForce(Agent* agent, float dTime)
-{
-	for (std::pair<SteeringBehavior*, float> pair : steerings)
+ {
+	for (SteeringBehavior* steeringBehavior : steerings)
 	{
-		force = pair.first->GetForce();
-		if (force.Length() > K_PRIORITY_THRESHOLD)
+		steeringBehavior->SetTarget(agent->getTarget());
+		steeringBehavior->ApplySteeringForce(agent, dTime);
+
+		std::cout << steeringBehavior->GetForce().Length() << std::endl;
+			force += steeringBehavior->GetForce();
+		if (steeringBehavior->GetForce().Length() > K_PRIORITY_THRESHOLD)
 		{
 			return;
 		}
 	}
 }
 
-void PriorityList::AddSteeringBehavior(SteeringBehavior* steeringBehavior, float weight)
+void PriorityList::AddSteeringBehavior(SteeringBehavior* _steeringBehavior)
 {
-	std::pair<SteeringBehavior*, float> newPair;
-	newPair.first = steeringBehavior;
-	newPair.second = weight;
-	steerings.push_back(newPair); 
+	steerings.push_back(_steeringBehavior);
 }

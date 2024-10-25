@@ -7,6 +7,7 @@
 #include "SceneFlee.h"
 #include "CompositeWeightSumScene.h"
 #include "CollisionAvoidanceScene.h"
+#include "PriorityListScene.h"
 #include "AgentManager.h"
 
 using namespace std;
@@ -53,6 +54,12 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new CollisionAvoidanceScene;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_5)
+			{
+				delete(curr_scene);
+				curr_scene = new PriorityListScene;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))

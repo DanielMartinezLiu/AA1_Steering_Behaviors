@@ -6,6 +6,9 @@
 #include "AgentManager.h"
 #include "ObstacleManager.h"
 #include "Obstacle.h"
+#include "Separation.h"
+#include "Aligment.h"
+#include "Cohesion.h"
 
 using namespace std;
 
@@ -14,7 +17,7 @@ CollisionAvoidanceScene::CollisionAvoidanceScene()
 	target = Vector2D(640, 360);
 	Vector2D position = Vector2D(640, 360);
 
-	CreateAgents(1, position, target);
+	CreateAgents(10, position, target);
 
 
 	AM.Instance().SetAgents(GetAgents());
@@ -73,9 +76,12 @@ void CollisionAvoidanceScene::CreateAgents(int quantity, Vector2D position, Vect
 	for (int i = 0; i < quantity; i++)
 	{
 		CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
-		compositedWeightSum->AddSteeringBehavior(new Seek(), 1);
+		compositedWeightSum->AddSteeringBehavior(new Seek(), 1.0f);
+		compositedWeightSum->AddSteeringBehavior(new Cohesion(), 0.2f);
+		compositedWeightSum->AddSteeringBehavior(new Separation(), 0.7f);
+		compositedWeightSum->AddSteeringBehavior(new Aligment(), 0.3f);
 
-		Agent* agent = new Agent(compositedWeightSum, 1);
+		Agent* agent = new Agent(compositedWeightSum, 50);
 
 		Vector2D newPosition = Vector2D(position.x + x, position.y + y);
 
