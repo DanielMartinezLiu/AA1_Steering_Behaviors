@@ -1,0 +1,18 @@
+Controles:
+
+Escena 1 -> Seek: 					(Botón 1)
+	Click izquierdo ratón: Posicionar target.
+
+Escena 2 -> Flee: 					(Botón 2)
+	Click izquierdo ratón: Posicionar target.
+
+Escena 3 -> Flocking & Priority Weight: 		(Botón 3)
+	Click izquierdo ratón: Posicionar target.
+
+Escena 4 -> Flocking & Obstacle Avoidance: 		(Botón 4)
+	Click izquierdo ratón: Posicionar target.
+	Click derecho ratón: Crear un obstacle nuevo
+
+Escena 5 -> Priority List (entre Seek y Flee): 		(Botón 5)
+	Click izquierdo ratón: Posicionar target.
+
