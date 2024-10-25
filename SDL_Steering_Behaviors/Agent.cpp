@@ -1,4 +1,7 @@
 #include "Agent.h"
+#include "SteeringBehavior.h"
+#include "SDL_SimpleApp.h"
+
 
 using namespace std;
 
@@ -14,9 +17,29 @@ Agent::Agent() : sprite_texture(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				avoidanceLookahead(120)
 {
-	steering_behavior = new SteeringBehavior;
+	steering_behavior = nullptr;
+}
+
+Agent::Agent(SteeringBehavior* _steering_behavior, float _neighborRadius) : sprite_texture(0),
+				position(Vector2D(100, 100)),
+				target(Vector2D(1000, 100)),
+				velocity(Vector2D(0, 0)),
+				mass(0.5f),
+				max_force(1),
+				max_velocity(200),
+				orientation(0),
+				color({ 255,255,255,255 }),
+				sprite_num_frames(0),
+				sprite_w(0),
+				sprite_h(0),
+				draw_sprite(false),
+				avoidanceLookahead(120)
+{
+	steering_behavior = _steering_behavior;
+	neighborRadius = _neighborRadius;
 }
 
 Agent::~Agent()
@@ -27,7 +50,7 @@ Agent::~Agent()
 		delete (steering_behavior);
 }
 
-SteeringBehavior * Agent::Behavior()
+SteeringBehavior * Agent::GetSteeringBehavior()
 {
 	return steering_behavior;
 }
@@ -47,9 +70,24 @@ Vector2D Agent::getVelocity()
 	return velocity;
 }
 
+int Agent::getCurrentTargetIndex()
+{
+	return currentTargetIndex;
+}
+
+float Agent::getMaxForce()
+{
+	return max_force;
+}
+
 float Agent::getMaxVelocity()
 {
 	return max_velocity;
+}
+
+float Agent::getNeighborRadius()
+{
+	return neighborRadius;
 }
 
 void Agent::setPosition(Vector2D _position)
@@ -67,6 +105,11 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
+void Agent::addCurrentTargetIndex()
+{
+	currentTargetIndex++;
+}
+
 void Agent::setMass(float _mass)
 {
 	mass = _mass;
@@ -79,7 +122,7 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
-
+	steering_behavior->SetTarget(this->getTarget());
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -92,24 +135,85 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	Vector2D steering_force = this->Behavior()->Seek(this, this->getTarget(), dtime);
+	collisionEnter();
+	GetSteeringBehavior()->ApplySteeringForce(this, dtime);
 
-	Vector2D acceleration = steering_force / mass;
-	velocity = velocity + acceleration * dtime;
-	velocity = velocity.Truncate(max_velocity);
+	Vector2D acceleration = steering_behavior->GetForce() / mass;
+	velocity += acceleration * dtime;
+	velocity.Truncate(max_velocity);
 
-	position = position + velocity * dtime;
+	position += velocity * dtime;
 
 
 	// Update orientation
 	orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
-
 
 	// Trim position values to window size
 	if (position.x < 0) position.x = TheApp::Instance()->getWinSize().x;
 	if (position.y < 0) position.y = TheApp::Instance()->getWinSize().y;
 	if (position.x > TheApp::Instance()->getWinSize().x) position.x = 0;
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
+}
+
+void Agent::collisionEnter()
+{
+	Vector2D raycatVector = position;
+	Vector2D _velocity = velocity;
+
+	_velocity = _velocity.Normalize() * avoidanceLookahead;
+	raycatVector += _velocity;
+
+	Vector2D intersectionPoint, normalVector;
+	bool obstacleAvoidanceCollision = false;
+
+	for (Obstacle* obstacle : OM.GetObstacles())
+	{
+		obstacleAvoidanceCollision = obstacleIntersection(obstacle, raycatVector, intersectionPoint, normalVector);
+
+		if (obstacleAvoidanceCollision)
+			break;
+	}
+
+	if (obstacleAvoidanceCollision)
+	{
+		float avoidanceDistance = 70.f;
+		Vector2D avoidanceForce = normalVector * avoidanceDistance;
+
+		float smoothingFactor = 0.1f;
+		velocity = Vector2D::Lerp(velocity, velocity + avoidanceForce, smoothingFactor);
+		velocity.Truncate(max_velocity);
+	}
+}
+
+bool Agent::obstacleIntersection(Obstacle* _obstacle, Vector2D& _raycast, Vector2D& _intersectionPoint, Vector2D& _normalVecotr)
+{
+	Vector2D segmentDir = _raycast - position;
+	float segmentLength = segmentDir.Length();
+	segmentDir.Normalize();
+
+	Vector2D toCircle = _obstacle->GetPosition() - position;
+	float projectionLength = Vector2D::Dot(toCircle, segmentDir);
+
+	if (projectionLength < 0 || projectionLength > segmentLength)
+	{
+		return false;
+	}
+
+	Vector2D closestPointOnSegment = position + segmentDir * projectionLength;
+
+	float distanceToCircle = (closestPointOnSegment - _obstacle->GetPosition()).Length();
+
+	if (distanceToCircle <= _obstacle->GetRadius()) {
+		float offsetDistance = sqrt(_obstacle->GetRadius() * _obstacle->GetRadius() - distanceToCircle * distanceToCircle);
+
+		_intersectionPoint = closestPointOnSegment - segmentDir * offsetDistance;
+
+		_normalVecotr = (_intersectionPoint - _obstacle->GetPosition()).Normalize();
+
+		return true;
+	}
+
+	return false;  
 }
 
 void Agent::draw()

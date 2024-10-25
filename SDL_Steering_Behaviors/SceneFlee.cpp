@@ -1,15 +1,23 @@
 #include "SceneFlee.h"
+#include "CompositeWeightedSum.h"
+#include "Flee.h"
+#include "SDL_SimpleApp.h"
+#include "AgentManager.h"
 
 using namespace std;
 
 SceneFlee::SceneFlee()
 {
-	Agent *agent = new Agent;
+	CompositeWeightedSum* compositedWeightSum = new CompositeWeightedSum();
+	compositedWeightSum->AddSteeringBehavior(new Flee(), 1);
+	Agent *agent = new Agent(compositedWeightSum, 1);
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
-	//agent->loadSpriteTexture("../res/soldier.png", 4);
+	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 	target = Vector2D(640, 360);
+
+	AM.Instance().SetAgents(GetAgents());
 }
 
 SceneFlee::~SceneFlee()

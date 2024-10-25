@@ -23,7 +23,7 @@ struct Vector2D
 	
 	Vector2D(float valueX = 0.0f, float valueY = 0.0f): x{valueX}, y{valueY}
 	{}
-	
+
 	inline float Length() const
 	{
 		return (float)sqrt(x * x + y * y);
@@ -109,6 +109,11 @@ struct Vector2D
 	static inline float Dot(const Vector2D& v1, const Vector2D& v2)
 	{
 		return v1.x * v2.x + v1.y * v2.y;
+	}
+	
+	static Vector2D Lerp(Vector2D& start, Vector2D& end, float t) 
+	{
+		return start + (end - start) * t;
 	}
 
 	inline Vector2D Truncate(float max)
